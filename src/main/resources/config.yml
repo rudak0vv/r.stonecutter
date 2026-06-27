@@ -1,0 +1,858 @@
+# ============================================================
+#  r.stonecutter — конфиг рецептов
+#  Формат рецепта:
+#    enabled: true/false       — включить/выключить рецепт
+#    input: "namespace:id"     — предмет на входе
+#    output: "namespace:id"    — предмет на выходе
+#    amount: N                 — кол-во выходных предметов
+#    input-count: N            — (необязательно) сколько входных предметов нужно (по умолч. 1)
+#    tag: "namespace:tag"      — (вместо input) принимать всю тег-группу предметов
+#    nbt:                      — (необязательно) NBT/компонент для конкретизации входа
+#      component: "key"
+#      value: "val"
+# ============================================================
+
+recipes:
+
+  # ===========================================================
+  #  ДЕРЕВО — ДОСКИ
+  #  Из 1 доски: 2 плиты / 1 ступенька / 2 палки
+  # ===========================================================
+
+  planks_to_slab:
+    enabled: true
+    tag: "minecraft:planks"
+    output: "minecraft:oak_slab"       # будет заменён на правильный тип в коде
+    amount: 2
+    dynamic_wood: true
+    wood_target: "slab"
+
+  planks_to_stairs:
+    enabled: true
+    tag: "minecraft:planks"
+    output: "minecraft:oak_stairs"
+    amount: 1
+    dynamic_wood: true
+    wood_target: "stairs"
+
+  planks_to_stick:
+    enabled: true
+    tag: "minecraft:planks"
+    output: "minecraft:stick"
+    amount: 2
+
+  # ===========================================================
+  #  ДЕРЕВО — БРЁВНА (любые, включая stripped)
+  #  Из 1 бревна: 4 кнопки / 2 забора / 1 калитка /
+  #               4 доски / 2 нажимных плиты / 1 люк /
+  #               8 палок / 1 обтёсанная древесина
+  # ===========================================================
+
+  log_to_buttons:
+    enabled: true
+    tag: "minecraft:logs"
+    output: "minecraft:oak_button"
+    amount: 4
+    dynamic_wood: true
+    wood_target: "button"
+
+  log_to_fence:
+    enabled: true
+    tag: "minecraft:logs"
+    output: "minecraft:oak_fence"
+    amount: 2
+    dynamic_wood: true
+    wood_target: "fence"
+
+  log_to_fence_gate:
+    enabled: true
+    tag: "minecraft:logs"
+    output: "minecraft:oak_fence_gate"
+    amount: 1
+    dynamic_wood: true
+    wood_target: "fence_gate"
+
+  log_to_planks:
+    enabled: true
+    tag: "minecraft:logs"
+    output: "minecraft:oak_planks"
+    amount: 4
+    dynamic_wood: true
+    wood_target: "planks"
+
+  log_to_pressure_plate:
+    enabled: true
+    tag: "minecraft:logs"
+    output: "minecraft:oak_pressure_plate"
+    amount: 2
+    dynamic_wood: true
+    wood_target: "pressure_plate"
+
+  log_to_trapdoor:
+    enabled: true
+    tag: "minecraft:logs"
+    output: "minecraft:oak_trapdoor"
+    amount: 1
+    dynamic_wood: true
+    wood_target: "trapdoor"
+
+  log_to_stick:
+    enabled: true
+    tag: "minecraft:logs"
+    output: "minecraft:stick"
+    amount: 8
+
+  log_to_stripped_wood:
+    enabled: true
+    tag: "minecraft:logs"
+    output: "minecraft:stripped_oak_wood"
+    amount: 1
+    dynamic_wood: true
+    wood_target: "stripped_wood"
+
+  # ===========================================================
+  #  КАМЕНЬ
+  #  Камень → булыжник; и из камня: плиты/ступеньки/ограда булыжника
+  # ===========================================================
+
+  stone_to_cobblestone:
+    enabled: true
+    input: "minecraft:stone"
+    output: "minecraft:cobblestone"
+    amount: 1
+
+  stone_to_cobblestone_slab:
+    enabled: true
+    input: "minecraft:stone"
+    output: "minecraft:cobblestone_slab"
+    amount: 2
+
+  stone_to_cobblestone_stairs:
+    enabled: true
+    input: "minecraft:stone"
+    output: "minecraft:cobblestone_stairs"
+    amount: 1
+
+  stone_to_cobblestone_wall:
+    enabled: true
+    input: "minecraft:stone"
+    output: "minecraft:cobblestone_wall"
+    amount: 1
+
+  # ===========================================================
+  #  СТЕКЛО — деколоризация (любое цветное → обычное)
+  # ===========================================================
+
+  colored_glass_to_glass:
+    enabled: true
+    tag: "minecraft:glass_blocks_discardable_contents"
+    output: "minecraft:glass"
+    amount: 1
+    exclude_input: "minecraft:glass"
+
+  colored_glass_pane_to_glass_pane:
+    enabled: true
+    tag: "minecraft:glass_panes_discardable_contents"
+    output: "minecraft:glass_pane"
+    amount: 1
+    exclude_input: "minecraft:glass_pane"
+
+  # ===========================================================
+  #  ОБОЖЖЁННАЯ ТЕРРАКОТА — конвертация цветов
+  # ===========================================================
+
+  glazed_terracotta_to_terracotta:
+    enabled: true
+    tag: "minecraft:glazed_terracotta"
+    output: "minecraft:terracotta"
+    amount: 1
+
+  terracotta_to_white:
+    enabled: true
+    tag: "minecraft:terracotta"
+    output: "minecraft:white_terracotta"
+    amount: 1
+    exclude_input: "minecraft:white_terracotta"
+
+  # ===========================================================
+  #  АМЕТИСТ
+  # ===========================================================
+
+  amethyst_cluster_to_shards:
+    enabled: true
+    input: "minecraft:amethyst_cluster"
+    output: "minecraft:amethyst_shard"
+    amount: 4
+
+  amethyst_block_to_shards:
+    enabled: true
+    input: "minecraft:amethyst_block"
+    output: "minecraft:amethyst_shard"
+    amount: 4
+
+  budding_amethyst_to_shards:
+    enabled: true
+    input: "minecraft:budding_amethyst"
+    output: "minecraft:amethyst_shard"
+    amount: 4
+
+  # ===========================================================
+  #  ЛОДКИ — нужно 5 досок (input-count: 5)
+  # ===========================================================
+
+  planks_to_oak_boat:
+    enabled: true
+    input: "minecraft:oak_planks"
+    output: "minecraft:oak_boat"
+    amount: 1
+    input-count: 5
+
+  planks_to_spruce_boat:
+    enabled: true
+    input: "minecraft:spruce_planks"
+    output: "minecraft:spruce_boat"
+    amount: 1
+    input-count: 5
+
+  planks_to_birch_boat:
+    enabled: true
+    input: "minecraft:birch_planks"
+    output: "minecraft:birch_boat"
+    amount: 1
+    input-count: 5
+
+  planks_to_jungle_boat:
+    enabled: true
+    input: "minecraft:jungle_planks"
+    output: "minecraft:jungle_boat"
+    amount: 1
+    input-count: 5
+
+  planks_to_acacia_boat:
+    enabled: true
+    input: "minecraft:acacia_planks"
+    output: "minecraft:acacia_boat"
+    amount: 1
+    input-count: 5
+
+  planks_to_dark_oak_boat:
+    enabled: true
+    input: "minecraft:dark_oak_planks"
+    output: "minecraft:dark_oak_boat"
+    amount: 1
+    input-count: 5
+
+  planks_to_mangrove_boat:
+    enabled: true
+    input: "minecraft:mangrove_planks"
+    output: "minecraft:mangrove_boat"
+    amount: 1
+    input-count: 5
+
+  planks_to_cherry_boat:
+    enabled: true
+    input: "minecraft:cherry_planks"
+    output: "minecraft:cherry_boat"
+    amount: 1
+    input-count: 5
+
+  planks_to_pale_oak_boat:
+    enabled: true
+    input: "minecraft:pale_oak_planks"
+    output: "minecraft:pale_oak_boat"
+    amount: 1
+    input-count: 5
+
+  planks_to_bamboo_raft:
+    enabled: true
+    input: "minecraft:bamboo_planks"
+    output: "minecraft:bamboo_raft"
+    amount: 1
+    input-count: 5
+
+  # ===========================================================
+  #  МЕДЬ — из блока
+  #  1 медный блок → различные изделия
+  # ===========================================================
+
+  # --- Блок → слитки ---
+  copper_block_to_ingots:
+    enabled: true
+    tag: "minecraft:copper_blocks"
+    output: "minecraft:copper_ingot"
+    amount: 9
+    copper_dewax: false
+
+  # --- Блок → точёный ---
+  copper_block_to_chiseled:
+    enabled: true
+    tag: "minecraft:copper_blocks"
+    output: "minecraft:chiseled_copper"
+    amount: 4
+    dynamic_copper: true
+    copper_target: "chiseled"
+
+  # --- Блок → дверь ---
+  copper_block_to_door:
+    enabled: true
+    tag: "minecraft:copper_blocks"
+    output: "minecraft:copper_door"
+    amount: 4
+    dynamic_copper: true
+    copper_target: "door"
+
+  # --- Блок → решётка ---
+  copper_block_to_grate:
+    enabled: true
+    tag: "minecraft:copper_blocks"
+    output: "minecraft:copper_grate"
+    amount: 4
+    dynamic_copper: true
+    copper_target: "grate"
+
+  # --- Блок → люк ---
+  copper_block_to_trapdoor:
+    enabled: true
+    tag: "minecraft:copper_blocks"
+    output: "minecraft:copper_trapdoor"
+    amount: 3
+    dynamic_copper: true
+    copper_target: "trapdoor"
+
+  # --- Блок → резной ---
+  copper_block_to_carved:
+    enabled: true
+    tag: "minecraft:copper_blocks"
+    output: "minecraft:exposed_chiseled_copper"
+    amount: 4
+    dynamic_copper: true
+    copper_target: "carved"
+
+  # --- Блок → резная плита ---
+  copper_block_to_carved_slab:
+    enabled: true
+    tag: "minecraft:copper_blocks"
+    output: "minecraft:exposed_copper_grate"
+    amount: 8
+    dynamic_copper: true
+    copper_target: "carved_slab"
+
+  # --- Блок → резная ступенька ---
+  copper_block_to_carved_stairs:
+    enabled: true
+    tag: "minecraft:copper_blocks"
+    output: "minecraft:exposed_copper_trapdoor"
+    amount: 4
+    dynamic_copper: true
+    copper_target: "carved_stairs"
+
+  # --- Блок → громоотвод ---
+  copper_block_to_lightning_rod:
+    enabled: true
+    tag: "minecraft:copper_blocks"
+    output: "minecraft:lightning_rod"
+    amount: 3
+
+  # --- Ступенька/плита → слиток ---
+  copper_slab_to_ingot:
+    enabled: true
+    tag: "minecraft:copper_slabs"
+    output: "minecraft:copper_ingot"
+    amount: 1
+
+  copper_stairs_to_ingot:
+    enabled: true
+    tag: "minecraft:copper_stairs"
+    output: "minecraft:copper_ingot"
+    amount: 1
+
+  # --- Снять воск (waxed → обычный той же степени) ---
+  waxed_copper_block_dewax:
+    enabled: true
+    tag: "minecraft:waxed_copper_blocks"
+    output: "minecraft:copper_block"
+    amount: 1
+    dynamic_copper: true
+    copper_target: "dewax_block"
+
+  waxed_copper_slab_dewax:
+    enabled: true
+    tag: "minecraft:waxed_copper_slabs"
+    output: "minecraft:copper_slab"
+    amount: 1
+    dynamic_copper: true
+    copper_target: "dewax_slab"
+
+  waxed_copper_stairs_dewax:
+    enabled: true
+    tag: "minecraft:waxed_copper_stairs"
+    output: "minecraft:copper_stairs"
+    amount: 1
+    dynamic_copper: true
+    copper_target: "dewax_stairs"
+
+  # --- Убрать окисление (oxidized/exposed/weathered → менее окислённый) ---
+  oxidized_copper_to_weathered:
+    enabled: true
+    input: "minecraft:oxidized_copper"
+    output: "minecraft:weathered_copper"
+    amount: 1
+
+  weathered_copper_to_exposed:
+    enabled: true
+    input: "minecraft:weathered_copper"
+    output: "minecraft:exposed_copper"
+    amount: 1
+
+  exposed_copper_to_copper:
+    enabled: true
+    input: "minecraft:exposed_copper"
+    output: "minecraft:copper_block"
+    amount: 1
+
+  oxidized_copper_slab_to_weathered:
+    enabled: true
+    input: "minecraft:oxidized_copper_slab"
+    output: "minecraft:weathered_copper_slab"
+    amount: 1
+
+  weathered_copper_slab_to_exposed:
+    enabled: true
+    input: "minecraft:weathered_copper_slab"
+    output: "minecraft:exposed_copper_slab"
+    amount: 1
+
+  exposed_copper_slab_to_copper:
+    enabled: true
+    input: "minecraft:exposed_copper_slab"
+    output: "minecraft:copper_slab"
+    amount: 1
+
+  oxidized_copper_stairs_to_weathered:
+    enabled: true
+    input: "minecraft:oxidized_copper_stairs"
+    output: "minecraft:weathered_copper_stairs"
+    amount: 1
+
+  weathered_copper_stairs_to_exposed:
+    enabled: true
+    input: "minecraft:weathered_copper_stairs"
+    output: "minecraft:exposed_copper_stairs"
+    amount: 1
+
+  exposed_copper_stairs_to_copper:
+    enabled: true
+    input: "minecraft:exposed_copper_stairs"
+    output: "minecraft:copper_stairs"
+    amount: 1
+
+  # ===========================================================
+  #  КАРТИНЫ — из одного generic painting выбрать конкретную
+  #  (painting с 13 компонентами → конкретный вариант)
+  # ===========================================================
+
+  painting_to_kebab:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:kebab"
+
+  painting_to_aztec:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:aztec"
+
+  painting_to_alban:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:alban"
+
+  painting_to_aztec2:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:aztec2"
+
+  painting_to_bomb:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:bomb"
+
+  painting_to_plant:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:plant"
+
+  painting_to_wasteland:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:wasteland"
+
+  painting_to_pool:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:pool"
+
+  painting_to_courbet:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:courbet"
+
+  painting_to_sea:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:sea"
+
+  painting_to_sunset:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:sunset"
+
+  painting_to_creebet:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:creebet"
+
+  painting_to_wanderer:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:wanderer"
+
+  painting_to_graham:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:graham"
+
+  painting_to_match:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:match"
+
+  painting_to_bust:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:bust"
+
+  painting_to_stage:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:stage"
+
+  painting_to_void:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:void"
+
+  painting_to_skull_and_roses:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:skull_and_roses"
+
+  painting_to_wither:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:wither"
+
+  painting_to_fighters:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:fighters"
+
+  painting_to_pointer:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:pointer"
+
+  painting_to_pigscene:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:pigscene"
+
+  painting_to_burning_skull:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:burning_skull"
+
+  painting_to_skeleton:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:skeleton"
+
+  painting_to_donkey_kong:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:donkey_kong"
+
+  painting_to_earth:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:earth"
+
+  painting_to_wind:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:wind"
+
+  painting_to_water:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:water"
+
+  painting_to_fire:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:fire"
+
+  painting_to_baroque:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:baroque"
+
+  painting_to_humble:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:humble"
+
+  painting_to_meditative:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:meditative"
+
+  painting_to_prairie_ride:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:prairie_ride"
+
+  painting_to_unpacked:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:unpacked"
+
+  painting_to_backyard:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:backyard"
+
+  painting_to_bouquet:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:bouquet"
+
+  painting_to_cavebird:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:cavebird"
+
+  painting_to_changing:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:changing"
+
+  painting_to_cotan:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:cotan"
+
+  painting_to_endboss:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:endboss"
+
+  painting_to_fern:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:fern"
+
+  painting_to_finding:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:finding"
+
+  painting_to_lowmist:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:lowmist"
+
+  painting_to_orb:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:orb"
+
+  painting_to_owlemons:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:owlemons"
+
+  painting_to_passage:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:passage"
+
+  painting_to_pond:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:pond"
+
+  painting_to_sunflowers:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:sunflowers"
+
+  painting_to_tides:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:tides"
+
+  painting_to_geode:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:geode"
+
+  painting_to_ore:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:ore"
+
+  painting_to_hang:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:hang"
+
+  painting_to_crowd:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:crowd"
+
+  painting_to_scape:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:scape"
+
+  painting_to_baroque_de_grez:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:baroque_de_grez"
+
+  painting_to_builders:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:builders"
+
+  painting_to_galaxy:
+    enabled: true
+    input: "minecraft:painting"
+    output: "minecraft:painting"
+    amount: 1
+    painting_variant: "minecraft:galaxy"

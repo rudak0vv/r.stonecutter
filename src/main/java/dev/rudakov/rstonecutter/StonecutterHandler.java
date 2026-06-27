@@ -1,18 +1,24 @@
 package dev.rudakov.rstonecutter;
 
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Tag;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.*;
-import org.bukkit.inventory.*;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.RecipeChoice;
+import org.bukkit.inventory.StonecuttingRecipe;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
-/**
- * Регистрирует все рецепты камнереза в Bukkit и слушает клики в инвентаре.
- */
 public class StonecutterHandler implements Listener {
 
     private final RStonecutter plugin;
@@ -26,7 +32,7 @@ public class StonecutterHandler implements Listener {
     }
 
     // -------------------------------------------------------
-    //  Регистрация
+    //  Регистрация / снятие рецептов
     // -------------------------------------------------------
 
     public void registerAll() {
@@ -34,7 +40,7 @@ public class StonecutterHandler implements Listener {
         for (RStonecutter.RecipeEntry entry : plugin.getRecipes()) {
             registerEntry(entry);
         }
-        log.info("Зарегистрировано в Bukkit рецептов: " + registeredKeys.size());
+        log.info("Зарегистрировано рецептов: " + registeredKeys.size());
     }
 
     public void unregisterAll() {
@@ -47,7 +53,6 @@ public class StonecutterHandler implements Listener {
 
     private void registerEntry(RStonecutter.RecipeEntry entry) {
         if (entry.inputTag != null) {
-            // Expand тег до всех Material-ов
             for (Material inputMat : resolveMaterialsFromTag(entry.inputTag)) {
                 if (entry.excludeInput != null) {
                     Material excl = Material.matchMaterial(entry.excludeInput);
@@ -65,9 +70,11 @@ public class StonecutterHandler implements Listener {
         ItemStack result = resolveResult(entry, inputMat);
         if (result == null || result.getType() == Material.AIR) return;
 
-        NamespacedKey key = new NamespacedKey(plugin, "rsc_" + (++counter));
+        // Используем plugin (JavaPlugin) явно — правильная сигнатура NamespacedKey
+        NamespacedKey key = new NamespacedKey(plugin, "rsc" + (++counter));
         StonecuttingRecipe recipe = new StonecuttingRecipe(
-            key, result,
+            key,
+            result,
             new RecipeChoice.MaterialChoice(inputMat)
         );
         Bukkit.addRecipe(recipe);
@@ -79,29 +86,25 @@ public class StonecutterHandler implements Listener {
     // -------------------------------------------------------
 
     private ItemStack resolveResult(RStonecutter.RecipeEntry entry, Material inputMat) {
-        // Картина
         if (entry.paintingVariant != null) {
             return plugin.buildPaintingItemStack(entry.paintingVariant, entry.amount);
         }
-        // Динамическое дерево
         if (entry.dynamicWood && entry.woodTarget != null) {
             String family = plugin.getWoodFamilyPublic(inputMat);
             if (family == null) return null;
             Material out = plugin.woodTargetPublic(family, entry.woodTarget);
             return out != null ? new ItemStack(out, entry.amount) : null;
         }
-        // Динамическая медь
         if (entry.dynamicCopper && entry.copperTargetKey != null) {
             Material out = plugin.copperTargetPublic(inputMat, entry.copperTargetKey);
             return out != null ? new ItemStack(out, entry.amount) : null;
         }
-        // Статический
         Material out = Material.matchMaterial(entry.outputItem);
         return out != null ? new ItemStack(out, entry.amount) : null;
     }
 
     // -------------------------------------------------------
-    //  Теги
+    //  Тег → список материалов
     // -------------------------------------------------------
 
     private Set<Material> resolveMaterialsFromTag(String tagStr) {

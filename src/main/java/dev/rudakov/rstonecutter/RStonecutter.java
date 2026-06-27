@@ -23,10 +23,6 @@ public class RStonecutter extends JavaPlugin {
     private List<RecipeEntry> recipes = new ArrayList<>();
     private StonecutterHandler handler;
 
-    // -------------------------------------------------------
-    //  Маппинги дерева
-    // -------------------------------------------------------
-
     private static final String[] WOOD_TYPES = {
         "OAK", "SPRUCE", "BIRCH", "JUNGLE", "ACACIA", "DARK_OAK",
         "MANGROVE", "CHERRY", "PALE_OAK", "BAMBOO", "CRIMSON", "WARPED"
@@ -41,23 +37,17 @@ public class RStonecutter extends JavaPlugin {
     }
 
     public Material woodTargetPublic(String family, String target) {
-        return switch (target) {
-            case "planks"         -> safeMat(family + "_PLANKS");
-            case "slab"           -> safeMat(family + "_SLAB");
-            case "stairs"         -> safeMat(family + "_STAIRS");
-            case "button"         -> safeMat(family + "_BUTTON");
-            case "fence"          -> safeMat(family + "_FENCE");
-            case "fence_gate"     -> safeMat(family + "_FENCE_GATE");
-            case "pressure_plate" -> safeMat(family + "_PRESSURE_PLATE");
-            case "trapdoor"       -> safeMat(family + "_TRAPDOOR");
-            case "stripped_wood"  -> safeMat("STRIPPED_" + family + "_WOOD");
-            default -> null;
-        };
+        if ("planks".equals(target))          return safeMat(family + "_PLANKS");
+        if ("slab".equals(target))            return safeMat(family + "_SLAB");
+        if ("stairs".equals(target))          return safeMat(family + "_STAIRS");
+        if ("button".equals(target))          return safeMat(family + "_BUTTON");
+        if ("fence".equals(target))           return safeMat(family + "_FENCE");
+        if ("fence_gate".equals(target))      return safeMat(family + "_FENCE_GATE");
+        if ("pressure_plate".equals(target))  return safeMat(family + "_PRESSURE_PLATE");
+        if ("trapdoor".equals(target))        return safeMat(family + "_TRAPDOOR");
+        if ("stripped_wood".equals(target))   return safeMat("STRIPPED_" + family + "_WOOD");
+        return null;
     }
-
-    // -------------------------------------------------------
-    //  Маппинги меди
-    // -------------------------------------------------------
 
     private int copperOxidationLevel(Material mat) {
         String name = mat.name();
@@ -69,12 +59,10 @@ public class RStonecutter extends JavaPlugin {
     }
 
     private String copperOxPrefix(int level) {
-        return switch (level) {
-            case 1 -> "EXPOSED_";
-            case 2 -> "WEATHERED_";
-            case 3 -> "OXIDIZED_";
-            default -> "";
-        };
+        if (level == 1) return "EXPOSED_";
+        if (level == 2) return "WEATHERED_";
+        if (level == 3) return "OXIDIZED_";
+        return "";
     }
 
     private boolean isWaxed(Material mat) {
@@ -87,33 +75,25 @@ public class RStonecutter extends JavaPlugin {
         String ox  = copperOxPrefix(level);
         String wax = waxed ? "WAXED_" : "";
 
-        return switch (target) {
-            case "chiseled"      -> safeMat(wax + ox + "CHISELED_COPPER");
-            case "door"          -> safeMat(wax + ox + "COPPER_DOOR");
-            case "grate"         -> safeMat(wax + ox + "COPPER_GRATE");
-            case "trapdoor"      -> safeMat(wax + ox + "COPPER_TRAPDOOR");
-            case "carved"        -> safeMat(wax + ox + "CHISELED_COPPER");
-            case "carved_slab"   -> safeMat(wax + ox + "CUT_COPPER_SLAB");
-            case "carved_stairs" -> safeMat(wax + ox + "CUT_COPPER_STAIRS");
-            case "dewax_block"   -> safeMat(ox + "COPPER_BLOCK");
-            case "dewax_slab"    -> safeMat(ox + "CUT_COPPER_SLAB");
-            case "dewax_stairs"  -> safeMat(ox + "CUT_COPPER_STAIRS");
-            default -> null;
-        };
+        if ("chiseled".equals(target))      return safeMat(wax + ox + "CHISELED_COPPER");
+        if ("door".equals(target))          return safeMat(wax + ox + "COPPER_DOOR");
+        if ("grate".equals(target))         return safeMat(wax + ox + "COPPER_GRATE");
+        if ("trapdoor".equals(target))      return safeMat(wax + ox + "COPPER_TRAPDOOR");
+        if ("carved".equals(target))        return safeMat(wax + ox + "CHISELED_COPPER");
+        if ("carved_slab".equals(target))   return safeMat(wax + ox + "CUT_COPPER_SLAB");
+        if ("carved_stairs".equals(target)) return safeMat(wax + ox + "CUT_COPPER_STAIRS");
+        if ("dewax_block".equals(target))   return safeMat(ox + "COPPER_BLOCK");
+        if ("dewax_slab".equals(target))    return safeMat(ox + "CUT_COPPER_SLAB");
+        if ("dewax_stairs".equals(target))  return safeMat(ox + "CUT_COPPER_STAIRS");
+        return null;
     }
-
-    // -------------------------------------------------------
-    //  Картины
-    // -------------------------------------------------------
 
     public ItemStack buildPaintingItemStack(String variantKey, int amount) {
         ItemStack item = new ItemStack(Material.PAINTING, amount);
         var meta = item.getItemMeta();
         if (!(meta instanceof PaintingMeta pm)) return null;
-
         NamespacedKey key = NamespacedKey.fromString(variantKey);
         if (key == null) return null;
-
         Art art = Registry.ART.get(key);
         if (art == null) {
             log.warning("Неизвестный вариант картины: " + variantKey);
@@ -124,11 +104,7 @@ public class RStonecutter extends JavaPlugin {
         return item;
     }
 
-    // -------------------------------------------------------
-    //  Утилиты
-    // -------------------------------------------------------
-
-    private Material safeMat(String name) {
+    public Material safeMat(String name) {
         try {
             return Material.valueOf(name.toUpperCase());
         } catch (IllegalArgumentException e) {
@@ -136,23 +112,15 @@ public class RStonecutter extends JavaPlugin {
         }
     }
 
-    public List<RecipeEntry> getRecipes() {
-        return recipes;
-    }
-
-    // -------------------------------------------------------
-    //  Жизненный цикл
-    // -------------------------------------------------------
+    public List<RecipeEntry> getRecipes() { return recipes; }
 
     @Override
     public void onEnable() {
         saveDefaultConfig();
         loadRecipes();
-
         handler = new StonecutterHandler(this);
         handler.registerAll();
         Bukkit.getPluginManager().registerEvents(handler, this);
-
         Objects.requireNonNull(getCommand("rsc-reload")).setExecutor((sender, cmd, label, args) -> {
             if (!sender.hasPermission("rstonecutter.reload")) {
                 sender.sendMessage("§cНет прав: rstonecutter.reload");
@@ -164,8 +132,7 @@ public class RStonecutter extends JavaPlugin {
             sender.sendMessage("§a[r.stonecutter] Перезагружено! (" + recipes.size() + " рецептов)");
             return true;
         });
-
-        log.info("Включён. Рецептов в конфиге: " + recipes.size());
+        log.info("Включён. Рецептов: " + recipes.size());
     }
 
     @Override
@@ -173,10 +140,6 @@ public class RStonecutter extends JavaPlugin {
         if (handler != null) handler.unregisterAll();
         log.info("Отключён.");
     }
-
-    // -------------------------------------------------------
-    //  Загрузка рецептов
-    // -------------------------------------------------------
 
     private void loadRecipes() {
         recipes.clear();
@@ -188,9 +151,7 @@ public class RStonecutter extends JavaPlugin {
         }
         for (String key : sec.getKeys(false)) {
             ConfigurationSection r = sec.getConfigurationSection(key);
-            if (r == null) continue;
-            if (!r.getBoolean("enabled", true)) continue;
-
+            if (r == null || !r.getBoolean("enabled", true)) continue;
             RecipeEntry entry = new RecipeEntry();
             entry.id              = key;
             entry.inputItem       = r.getString("input");
@@ -208,10 +169,6 @@ public class RStonecutter extends JavaPlugin {
         }
         log.info("Загружено рецептов: " + recipes.size());
     }
-
-    // -------------------------------------------------------
-    //  Модель рецепта
-    // -------------------------------------------------------
 
     public static class RecipeEntry {
         public String id;

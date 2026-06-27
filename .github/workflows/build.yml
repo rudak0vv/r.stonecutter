@@ -20,24 +20,31 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build and capture log
-        run: mvn package -B -e --no-transfer-progress > /tmp/build.log 2>&1 || true
-
-      - name: Commit log to repo
+      - name: Download deps and check
         run: |
-          cp /tmp/build.log build.log
-          git config user.email "ci@github"
-          git config user.name "CI"
-          git add build.log
-          git commit -m "ci: build log" || true
-          git push || true
+          mvn dependency:resolve -B --no-transfer-progress > /tmp/deps.log 2>&1 || true
+          # Проверяем что скачалось
+          find ~/.m2 -name "paper-api*.jar" 2>/dev/null | head -5 >> /tmp/deps.log
+          # Список пакетов в jar
+          JAR=$(find ~/.m2 -name "paper-api*.jar" 2>/dev/null | head -1)
+          if [ -n "$JAR" ]; then
+            echo "=== JAR: $JAR ===" >> /tmp/deps.log
+            unzip -l "$JAR" | grep -E "bukkit/art|PaintingMeta|bukkit/art" | head -20 >> /tmp/deps.log
+          fi
+          cat /tmp/deps.log
 
-      - name: Upload JAR
+      - name: Build
+        run: mvn package -B --no-transfer-progress > /tmp/build.log 2>&1 || true
+
+      - name: Commit logs
         run: |
-          ls target/ && cp target/*.jar . || true
+          cat /tmp/deps.log /tmp/build.log > build.log
+          git config user.email "ci@github" && git config user.name "CI"
+          git add build.log && git commit -m "ci: logs" && git push || true
 
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: r.stonecutter-1.3.0
-          path: "*.jar"
+          name: r.stonecutter
+          path: "target/*.jar"
           if-no-files-found: warn

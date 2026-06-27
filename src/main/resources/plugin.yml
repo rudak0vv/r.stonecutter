@@ -1,5 +1,5 @@
 name: r.stonecutter
-version: '${project.version}'
+version: '1.3.0'
 main: dev.rudakov.rstonecutter.RStonecutter
 api-version: '1.21.1'
 description: Расширенные рецепты камнереза с поддержкой дерева, меди, стекла, картин и многого другого.

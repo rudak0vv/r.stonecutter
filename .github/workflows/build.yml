@@ -18,24 +18,16 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build with Maven
-        id: build
-        run: |
-          mvn package -B -e --no-transfer-progress 2>&1 | tee /tmp/maven.log
-          echo "exit_code=${PIPESTATUS[0]}" >> $GITHUB_OUTPUT
+      - name: Build
+        run: mvn package -B --no-transfer-progress
 
-      - name: Post log to job summary
-        if: always()
-        run: |
-          echo "## Maven Build Log" >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
-          tail -100 /tmp/maven.log >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
+      - name: List target
+        run: ls -lh target/
 
       - name: Upload JAR
-        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: r.stonecutter-1.3.0
-          path: target/r.stonecutter-1.3.0.jar
+          path: target/*.jar
+          if-no-files-found: error
           retention-days: 30

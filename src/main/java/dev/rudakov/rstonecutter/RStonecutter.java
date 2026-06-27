@@ -5,14 +5,16 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.Tag;
+import org.bukkit.art.Art;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PaintingMeta;
-import org.bukkit.art.Art;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 public class RStonecutter extends JavaPlugin {
@@ -40,15 +42,15 @@ public class RStonecutter extends JavaPlugin {
 
     public Material woodTargetPublic(String family, String target) {
         return switch (target) {
-            case "planks"         -> mat(family + "_PLANKS");
-            case "slab"           -> mat(family + "_SLAB");
-            case "stairs"         -> mat(family + "_STAIRS");
-            case "button"         -> mat(family + "_BUTTON");
-            case "fence"          -> mat(family + "_FENCE");
-            case "fence_gate"     -> mat(family + "_FENCE_GATE");
-            case "pressure_plate" -> mat(family + "_PRESSURE_PLATE");
-            case "trapdoor"       -> mat(family + "_TRAPDOOR");
-            case "stripped_wood"  -> mat("STRIPPED_" + family + "_WOOD");
+            case "planks"         -> safeMat(family + "_PLANKS");
+            case "slab"           -> safeMat(family + "_SLAB");
+            case "stairs"         -> safeMat(family + "_STAIRS");
+            case "button"         -> safeMat(family + "_BUTTON");
+            case "fence"          -> safeMat(family + "_FENCE");
+            case "fence_gate"     -> safeMat(family + "_FENCE_GATE");
+            case "pressure_plate" -> safeMat(family + "_PRESSURE_PLATE");
+            case "trapdoor"       -> safeMat(family + "_TRAPDOOR");
+            case "stripped_wood"  -> safeMat("STRIPPED_" + family + "_WOOD");
             default -> null;
         };
     }
@@ -63,10 +65,7 @@ public class RStonecutter extends JavaPlugin {
         if (name.startsWith("OXIDIZED_"))  return 3;
         if (name.startsWith("WEATHERED_")) return 2;
         if (name.startsWith("EXPOSED_"))   return 1;
-        // базовая медь (no prefix)
-        if (name.startsWith("COPPER_") || name.startsWith("CUT_COPPER")
-                || name.startsWith("CHISELED_COPPER")) return 0;
-        return -1;
+        return 0;
     }
 
     private String copperOxPrefix(int level) {
@@ -84,23 +83,21 @@ public class RStonecutter extends JavaPlugin {
 
     public Material copperTargetPublic(Material inputMat, String target) {
         int level = copperOxidationLevel(inputMat);
-        if (level < 0) return null;
         boolean waxed = isWaxed(inputMat);
         String ox  = copperOxPrefix(level);
         String wax = waxed ? "WAXED_" : "";
 
         return switch (target) {
-            case "chiseled"      -> mat(wax + ox + "CHISELED_COPPER");
-            case "door"          -> mat(wax + ox + "COPPER_DOOR");
-            case "grate"         -> mat(wax + ox + "COPPER_GRATE");
-            case "trapdoor"      -> mat(wax + ox + "COPPER_TRAPDOOR");
-            case "carved"        -> mat(wax + ox + "CHISELED_COPPER");
-            case "carved_slab"   -> mat(wax + ox + "CUT_COPPER_SLAB");
-            case "carved_stairs" -> mat(wax + ox + "CUT_COPPER_STAIRS");
-            // Снять воск — тот же уровень без WAXED_
-            case "dewax_block"   -> mat(ox + "COPPER_BLOCK");
-            case "dewax_slab"    -> mat(ox + "CUT_COPPER_SLAB");
-            case "dewax_stairs"  -> mat(ox + "CUT_COPPER_STAIRS");
+            case "chiseled"      -> safeMat(wax + ox + "CHISELED_COPPER");
+            case "door"          -> safeMat(wax + ox + "COPPER_DOOR");
+            case "grate"         -> safeMat(wax + ox + "COPPER_GRATE");
+            case "trapdoor"      -> safeMat(wax + ox + "COPPER_TRAPDOOR");
+            case "carved"        -> safeMat(wax + ox + "CHISELED_COPPER");
+            case "carved_slab"   -> safeMat(wax + ox + "CUT_COPPER_SLAB");
+            case "carved_stairs" -> safeMat(wax + ox + "CUT_COPPER_STAIRS");
+            case "dewax_block"   -> safeMat(ox + "COPPER_BLOCK");
+            case "dewax_slab"    -> safeMat(ox + "CUT_COPPER_SLAB");
+            case "dewax_stairs"  -> safeMat(ox + "CUT_COPPER_STAIRS");
             default -> null;
         };
     }
@@ -131,7 +128,7 @@ public class RStonecutter extends JavaPlugin {
     //  Утилиты
     // -------------------------------------------------------
 
-    private Material mat(String name) {
+    private Material safeMat(String name) {
         try {
             return Material.valueOf(name.toUpperCase());
         } catch (IllegalArgumentException e) {
@@ -144,7 +141,7 @@ public class RStonecutter extends JavaPlugin {
     }
 
     // -------------------------------------------------------
-    //  Жизненный цикл плагина
+    //  Жизненный цикл
     // -------------------------------------------------------
 
     @Override
@@ -164,21 +161,21 @@ public class RStonecutter extends JavaPlugin {
             reloadConfig();
             loadRecipes();
             handler.registerAll();
-            sender.sendMessage("§a[r.stonecutter] Рецепты перезагружены! (" + recipes.size() + " рецептов)");
+            sender.sendMessage("§a[r.stonecutter] Перезагружено! (" + recipes.size() + " рецептов)");
             return true;
         });
 
-        log.info("r.stonecutter включён. Загружено рецептов из конфига: " + recipes.size());
+        log.info("Включён. Рецептов в конфиге: " + recipes.size());
     }
 
     @Override
     public void onDisable() {
         if (handler != null) handler.unregisterAll();
-        log.info("r.stonecutter отключён.");
+        log.info("Отключён.");
     }
 
     // -------------------------------------------------------
-    //  Загрузка рецептов из конфига
+    //  Загрузка рецептов
     // -------------------------------------------------------
 
     private void loadRecipes() {
@@ -196,19 +193,20 @@ public class RStonecutter extends JavaPlugin {
 
             RecipeEntry entry = new RecipeEntry();
             entry.id              = key;
-            entry.inputItem       = r.getString("input", null);
-            entry.inputTag        = r.getString("tag", null);
+            entry.inputItem       = r.getString("input");
+            entry.inputTag        = r.getString("tag");
             entry.outputItem      = r.getString("output", "minecraft:air");
             entry.amount          = r.getInt("amount", 1);
             entry.inputCount      = r.getInt("input-count", 1);
             entry.dynamicWood     = r.getBoolean("dynamic_wood", false);
-            entry.woodTarget      = r.getString("wood_target", null);
+            entry.woodTarget      = r.getString("wood_target");
             entry.dynamicCopper   = r.getBoolean("dynamic_copper", false);
-            entry.copperTargetKey = r.getString("copper_target", null);
-            entry.paintingVariant = r.getString("painting_variant", null);
-            entry.excludeInput    = r.getString("exclude_input", null);
+            entry.copperTargetKey = r.getString("copper_target");
+            entry.paintingVariant = r.getString("painting_variant");
+            entry.excludeInput    = r.getString("exclude_input");
             recipes.add(entry);
         }
+        log.info("Загружено рецептов: " + recipes.size());
     }
 
     // -------------------------------------------------------

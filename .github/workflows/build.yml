@@ -20,27 +20,25 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Download deps and check
+      - name: Inspect paper-api and build
         run: |
-          mvn dependency:resolve -B --no-transfer-progress > /tmp/deps.log 2>&1 || true
-          # Проверяем что скачалось
-          find ~/.m2 -name "paper-api*.jar" 2>/dev/null | head -5 >> /tmp/deps.log
-          # Список пакетов в jar
-          JAR=$(find ~/.m2 -name "paper-api*.jar" 2>/dev/null | head -1)
+          mvn dependency:resolve -B -q --no-transfer-progress || true
+          JAR=$(find ~/.m2 -name "paper-api-1.21.4*.jar" | grep -v "sources\|javadoc" | head -1)
+          echo "=== paper-api JAR: $JAR ===" > /tmp/build.log
           if [ -n "$JAR" ]; then
-            echo "=== JAR: $JAR ===" >> /tmp/deps.log
-            unzip -l "$JAR" | grep -E "bukkit/art|PaintingMeta|bukkit/art" | head -20 >> /tmp/deps.log
+            echo "=== art/paint classes ===" >> /tmp/build.log
+            unzip -l "$JAR" | grep -iE "art|paint|Art|Paint" >> /tmp/build.log || echo "none found" >> /tmp/build.log
+            echo "=== org/bukkit/ top packages ===" >> /tmp/build.log
+            unzip -l "$JAR" | grep "org/bukkit/" | sed 's|.*/org/bukkit/\([^/]*\)/.*|org/bukkit/\1|' | sort -u | head -30 >> /tmp/build.log
           fi
-          cat /tmp/deps.log
+          mvn package -B --no-transfer-progress >> /tmp/build.log 2>&1 || true
+          cat /tmp/build.log
 
-      - name: Build
-        run: mvn package -B --no-transfer-progress > /tmp/build.log 2>&1 || true
-
-      - name: Commit logs
+      - name: Commit log
         run: |
-          cat /tmp/deps.log /tmp/build.log > build.log
+          cp /tmp/build.log build.log
           git config user.email "ci@github" && git config user.name "CI"
-          git add build.log && git commit -m "ci: logs" && git push || true
+          git add build.log && git commit -m "ci: build log" && git push || true
 
       - uses: actions/upload-artifact@v4
         if: always()

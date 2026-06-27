@@ -91,30 +91,23 @@
   processing is enabled explicitly (-proc:only, -proc:full).
   Use -Xlint:-options to suppress this message.
   Use -proc:none to disable annotation processing.
-[INFO] -------------------------------------------------------------
-[ERROR] COMPILATION ERROR : 
-[INFO] -------------------------------------------------------------
-[ERROR] /home/runner/work/r.stonecutter/r.stonecutter/src/main/java/dev/rudakov/rstonecutter/RStonecutter.java:[8,22] package org.bukkit.art does not exist
-[ERROR] /home/runner/work/r.stonecutter/r.stonecutter/src/main/java/dev/rudakov/rstonecutter/RStonecutter.java:[12,33] cannot find symbol
-  symbol:   class PaintingMeta
-  location: package org.bukkit.inventory.meta
-[INFO] 2 errors 
-[INFO] -------------------------------------------------------------
+[INFO] /home/runner/work/r.stonecutter/r.stonecutter/src/main/java/dev/rudakov/rstonecutter/RStonecutter.java: /home/runner/work/r.stonecutter/r.stonecutter/src/main/java/dev/rudakov/rstonecutter/RStonecutter.java uses or overrides a deprecated API.
+[INFO] /home/runner/work/r.stonecutter/r.stonecutter/src/main/java/dev/rudakov/rstonecutter/RStonecutter.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- resources:3.4.0:testResources (default-testResources) @ r.stonecutter ---
+[INFO] skip non existing resourceDirectory /home/runner/work/r.stonecutter/r.stonecutter/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ r.stonecutter ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.5.4:test (default-test) @ r.stonecutter ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- jar:3.5.0:jar (default-jar) @ r.stonecutter ---
+[INFO] Building jar: /home/runner/work/r.stonecutter/r.stonecutter/target/r.stonecutter-1.3.0.jar
 [INFO] ------------------------------------------------------------------------
-[INFO] BUILD FAILURE
+[INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  2.371 s
-[INFO] Finished at: 2026-06-27T18:48:34Z
+[INFO] Total time:  7.005 s
+[INFO] Finished at: 2026-06-27T18:50:02Z
 [INFO] ------------------------------------------------------------------------
-[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.15.0:compile (default-compile) on project r.stonecutter: Compilation failure: Compilation failure: 
-[ERROR] /home/runner/work/r.stonecutter/r.stonecutter/src/main/java/dev/rudakov/rstonecutter/RStonecutter.java:[8,22] package org.bukkit.art does not exist
-[ERROR] /home/runner/work/r.stonecutter/r.stonecutter/src/main/java/dev/rudakov/rstonecutter/RStonecutter.java:[12,33] cannot find symbol
-[ERROR]   symbol:   class PaintingMeta
-[ERROR]   location: package org.bukkit.inventory.meta
-[ERROR] -> [Help 1]
-[ERROR] 
-[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
-[ERROR] Re-run Maven using the -X switch to enable full debug logging.
-[ERROR] 
-[ERROR] For more information about the errors and possible solutions, please read the following articles:
-[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

@@ -172,4 +172,4 @@ JAR будет в `target/r.stonecutter-*.jar`.
 
 ---
 
-*Автор: rudak0vv*
+*Автор: rudak0v*

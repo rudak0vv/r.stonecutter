@@ -19,15 +19,18 @@ jobs:
           cache: maven
 
       - name: Build with Maven
-        run: mvn package -B -e 2>&1 | tee /tmp/maven.log; exit ${PIPESTATUS[0]}
+        id: build
+        run: |
+          mvn package -B -e --no-transfer-progress 2>&1 | tee /tmp/maven.log
+          echo "exit_code=${PIPESTATUS[0]}" >> $GITHUB_OUTPUT
 
-      - name: Upload build log on failure
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: maven-log
-          path: /tmp/maven.log
-          retention-days: 7
+      - name: Post log to job summary
+        if: always()
+        run: |
+          echo "## Maven Build Log" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          tail -100 /tmp/maven.log >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
 
       - name: Upload JAR
         if: success()

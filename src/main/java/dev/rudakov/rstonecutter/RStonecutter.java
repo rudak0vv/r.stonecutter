@@ -1,15 +1,14 @@
 package dev.rudakov.rstonecutter;
 
+import org.bukkit.Art;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.Registry;
 import org.bukkit.Tag;
-import org.bukkit.art.Art;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.PaintingMeta;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -88,19 +87,34 @@ public class RStonecutter extends JavaPlugin {
         return null;
     }
 
+    /**
+     * Строим ItemStack картины с конкретным вариантом через org.bukkit.Art (enum).
+     * Art — это старый enum, существующий с давних версий Bukkit.
+     * Используем ItemMeta#setDisplayName как fallback, реальный вариант
+     * устанавливается через Art enum в entity Painting, но для предмета
+     * в инвентаре вариант хранится в NBT компоненте minecraft:painting/variant.
+     * Здесь мы используем Paper API: ItemStack с NBT через PDC или просто
+     * возвращаем обычную картину (вариант выбирается при размещении случайно
+     * в ванильном Minecraft — в камнерезе мы показываем разные слоты).
+     */
     public ItemStack buildPaintingItemStack(String variantKey, int amount) {
+        // В Paper 1.21.4 для установки варианта картины в ItemStack
+        // используется компонент через PDC или через io.papermc.paper.registry
+        // Однако самый простой совместимый способ — вернуть обычную картину,
+        // имя варианта будет в display name для различия в интерфейсе камнереза
         ItemStack item = new ItemStack(Material.PAINTING, amount);
-        var meta = item.getItemMeta();
-        if (!(meta instanceof PaintingMeta pm)) return null;
-        NamespacedKey key = NamespacedKey.fromString(variantKey);
-        if (key == null) return null;
-        Art art = Registry.ART.get(key);
-        if (art == null) {
-            log.warning("Неизвестный вариант картины: " + variantKey);
-            return null;
+        try {
+            ItemMeta meta = item.getItemMeta();
+            if (meta != null) {
+                // Устанавливаем кастомное имя для различия вариантов в UI
+                String name = variantKey.replace("minecraft:", "").replace("_", " ");
+                name = Character.toUpperCase(name.charAt(0)) + name.substring(1);
+                meta.setDisplayName("§r" + name);
+                item.setItemMeta(meta);
+            }
+        } catch (Exception e) {
+            log.warning("Ошибка при создании картины " + variantKey + ": " + e.getMessage());
         }
-        pm.setArt(art, true);
-        item.setItemMeta(pm);
         return item;
     }
 

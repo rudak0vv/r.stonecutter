@@ -1,4 +1,75 @@
-[INFO] Error stacktraces are turned on.
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ---------------------< dev.rudakov:r.stonecutter >----------------------
+[INFO] Building r.stonecutter 1.3.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.7.0:resolve (default-cli) @ r.stonecutter ---
+[INFO] Artifact org.codehaus.plexus:plexus-interpolation:jar:1.26 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases), apache.snapshots (https://repository.apache.org/snapshots, default, snapshots)]
+[INFO] Artifact org.codehaus.plexus:plexus-interpolation:jar:1.26 is present in the local repository, but cached from a remote repository ID that is unavailable in current build context, verifying that is downloadable from [central (https://repo.maven.apache.org/maven2, default, releases), apache.snapshots (https://repository.apache.org/snapshots, default, snapshots)]
+[INFO] 
+[INFO] The following files have been resolved:
+[INFO]    io.papermc.paper:paper-api:jar:1.21.1-R0.1-SNAPSHOT:provided -- module org.bukkit [auto]
+[INFO]    com.mojang:brigadier:jar:1.2.9:provided -- module brigadier (auto)
+[INFO]    com.google.guava:guava:jar:32.1.2-jre:provided -- module com.google.common [auto]
+[INFO]    com.google.guava:failureaccess:jar:1.0.1:provided -- module failureaccess (auto)
+[INFO]    com.google.guava:listenablefuture:jar:9999.0-empty-to-avoid-conflict-with-guava:provided -- module listenablefuture (auto)
+[INFO]    com.google.code.findbugs:jsr305:jar:3.0.2:provided -- module jsr305 (auto)
+[INFO]    com.google.errorprone:error_prone_annotations:jar:2.18.0:provided -- module com.google.errorprone.annotations [auto]
+[INFO]    com.google.j2objc:j2objc-annotations:jar:2.8:provided -- module j2objc.annotations (auto)
+[INFO]    com.google.code.gson:gson:jar:2.10.1:provided -- module com.google.gson
+[INFO]    net.md-5:bungeecord-chat:jar:1.20-R0.2-deprecated+build.18:provided -- module bungeecord.chat (auto)
+[INFO]    org.yaml:snakeyaml:jar:2.2:provided -- module org.yaml.snakeyaml
+[INFO]    org.joml:joml:jar:1.10.5:provided -- module org.joml
+[INFO]    com.googlecode.json-simple:json-simple:jar:1.1.1:provided -- module json.simple (auto)
+[INFO]    it.unimi.dsi:fastutil:jar:8.5.6:provided -- module it.unimi.dsi.fastutil [auto]
+[INFO]    org.apache.logging.log4j:log4j-api:jar:2.17.1:provided -- module org.apache.logging.log4j
+[INFO]    org.slf4j:slf4j-api:jar:2.0.9:provided -- module org.slf4j
+[INFO]    org.apache.maven:maven-resolver-provider:jar:3.9.6:provided -- module maven.resolver.provider (auto)
+[INFO]    org.apache.maven:maven-model:jar:3.9.6:provided -- module maven.model (auto)
+[INFO]    org.apache.maven:maven-model-builder:jar:3.9.6:provided -- module maven.model.builder (auto)
+[INFO]    org.codehaus.plexus:plexus-interpolation:jar:1.26:provided -- module plexus.interpolation (auto)
+[INFO]    org.apache.maven:maven-artifact:jar:3.9.6:provided -- module maven.artifact (auto)
+[INFO]    org.apache.commons:commons-lang3:jar:3.12.0:provided -- module org.apache.commons.lang3 [auto]
+[INFO]    org.apache.maven:maven-builder-support:jar:3.9.6:provided -- module maven.builder.support (auto)
+[INFO]    org.eclipse.sisu:org.eclipse.sisu.inject:jar:0.9.0.M2:provided -- module org.eclipse.sisu.inject (auto)
+[INFO]    org.apache.maven:maven-repository-metadata:jar:3.9.6:provided -- module maven.repository.metadata (auto)
+[INFO]    org.apache.maven.resolver:maven-resolver-api:jar:1.9.18:provided -- module org.apache.maven.resolver [auto]
+[INFO]    org.apache.maven.resolver:maven-resolver-spi:jar:1.9.18:provided -- module org.apache.maven.resolver.spi [auto]
+[INFO]    org.apache.maven.resolver:maven-resolver-util:jar:1.9.18:provided -- module org.apache.maven.resolver.util [auto]
+[INFO]    org.apache.maven.resolver:maven-resolver-impl:jar:1.9.18:provided -- module org.apache.maven.resolver.impl [auto]
+[INFO]    org.apache.maven.resolver:maven-resolver-named-locks:jar:1.9.18:provided -- module org.apache.maven.resolver.named [auto]
+[INFO]    org.codehaus.plexus:plexus-utils:jar:3.5.1:provided -- module plexus.utils (auto)
+[INFO]    javax.inject:javax.inject:jar:1:provided -- module javax.inject (auto)
+[INFO]    org.jspecify:jspecify:jar:1.0.0:provided -- module org.jspecify
+[INFO]    net.kyori:adventure-api:jar:4.17.0:provided -- module net.kyori.adventure [auto]
+[INFO]    net.kyori:adventure-key:jar:4.17.0:provided -- module net.kyori.adventure.key [auto]
+[INFO]    net.kyori:examination-api:jar:1.3.0:provided -- module net.kyori.examination.api
+[INFO]    net.kyori:examination-string:jar:1.3.0:provided -- module net.kyori.examination.string
+[INFO]    org.jetbrains:annotations:jar:24.1.0:provided -- module org.jetbrains.annotations
+[INFO]    net.kyori:adventure-text-minimessage:jar:4.17.0:provided -- module net.kyori.adventure.text.minimessage [auto]
+[INFO]    net.kyori:adventure-text-serializer-gson:jar:4.17.0:provided -- module net.kyori.adventure.text.serializer.gson [auto]
+[INFO]    net.kyori:adventure-text-serializer-json:jar:4.17.0:provided -- module net.kyori.adventure.text.serializer.json [auto]
+[INFO]    net.kyori:option:jar:1.0.0:provided -- module net.kyori.option
+[INFO]    com.google.auto.service:auto-service-annotations:jar:1.1.1:provided -- module com.google.auto.service [auto]
+[INFO]    net.kyori:adventure-text-serializer-legacy:jar:4.17.0:provided -- module net.kyori.adventure.text.serializer.legacy [auto]
+[INFO]    net.kyori:adventure-text-serializer-plain:jar:4.17.0:provided -- module net.kyori.adventure.text.serializer.plain [auto]
+[INFO]    net.kyori:adventure-text-logger-slf4j:jar:4.17.0:provided -- module net.kyori.adventure.text.logger.slf4j [auto]
+[INFO]    org.checkerframework:checker-qual:jar:3.33.0:provided -- module org.checkerframework.checker.qual [auto]
+[INFO]    org.ow2.asm:asm:jar:9.7.1:provided -- module org.objectweb.asm
+[INFO]    org.ow2.asm:asm-commons:jar:9.7.1:provided -- module org.objectweb.asm.commons
+[INFO]    org.ow2.asm:asm-tree:jar:9.7.1:provided -- module org.objectweb.asm.tree
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  6.387 s
+[INFO] Finished at: 2026-06-27T18:45:45Z
+[INFO] ------------------------------------------------------------------------
+/home/runner/.m2/repository/io/papermc/paper/paper-api/1.21.1-R0.1-SNAPSHOT/paper-api-1.21.1-R0.1-SNAPSHOT.jar
+/home/runner/.m2/repository/io/papermc/paper/paper-api/1.21.1-R0.1-SNAPSHOT/paper-api-1.21.1-R0.1-20250328.161643-128.jar
+=== JAR: /home/runner/.m2/repository/io/papermc/paper/paper-api/1.21.1-R0.1-SNAPSHOT/paper-api-1.21.1-R0.1-SNAPSHOT.jar ===
 [INFO] Scanning for projects...
 [INFO] 
 [INFO] ---------------------< dev.rudakov:r.stonecutter >----------------------
@@ -31,8 +102,8 @@
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  1.862 s
-[INFO] Finished at: 2026-06-27T18:44:45Z
+[INFO] Total time:  2.632 s
+[INFO] Finished at: 2026-06-27T18:45:49Z
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.15.0:compile (default-compile) on project r.stonecutter: Compilation failure: Compilation failure: 
 [ERROR] /home/runner/work/r.stonecutter/r.stonecutter/src/main/java/dev/rudakov/rstonecutter/RStonecutter.java:[8,22] package org.bukkit.art does not exist
@@ -40,61 +111,8 @@
 [ERROR]   symbol:   class PaintingMeta
 [ERROR]   location: package org.bukkit.inventory.meta
 [ERROR] -> [Help 1]
-org.apache.maven.lifecycle.LifecycleExecutionException: Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.15.0:compile (default-compile) on project r.stonecutter: Compilation failure
-    at org.apache.maven.lifecycle.internal.MojoExecutor.doExecute2 (MojoExecutor.java:333)
-    at org.apache.maven.lifecycle.internal.MojoExecutor.doExecute (MojoExecutor.java:316)
-    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:212)
-    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:174)
-    at org.apache.maven.lifecycle.internal.MojoExecutor.access$000 (MojoExecutor.java:75)
-    at org.apache.maven.lifecycle.internal.MojoExecutor$1.run (MojoExecutor.java:162)
-    at org.apache.maven.plugin.DefaultMojosExecutionStrategy.execute (DefaultMojosExecutionStrategy.java:39)
-    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:159)
-    at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject (LifecycleModuleBuilder.java:105)
-    at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject (LifecycleModuleBuilder.java:73)
-    at org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder.build (SingleThreadedBuilder.java:53)
-    at org.apache.maven.lifecycle.internal.LifecycleStarter.execute (LifecycleStarter.java:118)
-    at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:261)
-    at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:173)
-    at org.apache.maven.DefaultMaven.execute (DefaultMaven.java:101)
-    at org.apache.maven.cli.MavenCli.execute (MavenCli.java:919)
-    at org.apache.maven.cli.MavenCli.doMain (MavenCli.java:285)
-    at org.apache.maven.cli.MavenCli.main (MavenCli.java:207)
-    at jdk.internal.reflect.DirectMethodHandleAccessor.invoke (DirectMethodHandleAccessor.java:103)
-    at java.lang.reflect.Method.invoke (Method.java:580)
-    at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced (Launcher.java:255)
-    at org.codehaus.plexus.classworlds.launcher.Launcher.launch (Launcher.java:201)
-    at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode (Launcher.java:362)
-    at org.codehaus.plexus.classworlds.launcher.Launcher.main (Launcher.java:314)
-Caused by: org.apache.maven.plugin.compiler.CompilationFailureException: Compilation failure
-    at org.apache.maven.plugin.compiler.AbstractCompilerMojo.executeReal (AbstractCompilerMojo.java:1319)
-    at org.apache.maven.plugin.compiler.AbstractCompilerMojo.execute (AbstractCompilerMojo.java:708)
-    at org.apache.maven.plugin.compiler.CompilerMojo.execute (CompilerMojo.java:235)
-    at org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo (DefaultBuildPluginManager.java:126)
-    at org.apache.maven.lifecycle.internal.MojoExecutor.doExecute2 (MojoExecutor.java:328)
-    at org.apache.maven.lifecycle.internal.MojoExecutor.doExecute (MojoExecutor.java:316)
-    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:212)
-    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:174)
-    at org.apache.maven.lifecycle.internal.MojoExecutor.access$000 (MojoExecutor.java:75)
-    at org.apache.maven.lifecycle.internal.MojoExecutor$1.run (MojoExecutor.java:162)
-    at org.apache.maven.plugin.DefaultMojosExecutionStrategy.execute (DefaultMojosExecutionStrategy.java:39)
-    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:159)
-    at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject (LifecycleModuleBuilder.java:105)
-    at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject (LifecycleModuleBuilder.java:73)
-    at org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder.build (SingleThreadedBuilder.java:53)
-    at org.apache.maven.lifecycle.internal.LifecycleStarter.execute (LifecycleStarter.java:118)
-    at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:261)
-    at org.apache.maven.DefaultMaven.doExecute (DefaultMaven.java:173)
-    at org.apache.maven.DefaultMaven.execute (DefaultMaven.java:101)
-    at org.apache.maven.cli.MavenCli.execute (MavenCli.java:919)
-    at org.apache.maven.cli.MavenCli.doMain (MavenCli.java:285)
-    at org.apache.maven.cli.MavenCli.main (MavenCli.java:207)
-    at jdk.internal.reflect.DirectMethodHandleAccessor.invoke (DirectMethodHandleAccessor.java:103)
-    at java.lang.reflect.Method.invoke (Method.java:580)
-    at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced (Launcher.java:255)
-    at org.codehaus.plexus.classworlds.launcher.Launcher.launch (Launcher.java:201)
-    at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode (Launcher.java:362)
-    at org.codehaus.plexus.classworlds.launcher.Launcher.main (Launcher.java:314)
 [ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
 [ERROR] Re-run Maven using the -X switch to enable full debug logging.
 [ERROR] 
 [ERROR] For more information about the errors and possible solutions, please read the following articles:
